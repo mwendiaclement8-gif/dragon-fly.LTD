@@ -1,0 +1,292 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dragonfly — Premium Digital Assets</title>
+<meta name="description" content="Dragonfly — buy and download premium videos, photos, documents and digital assets instantly." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#05060a;
+    --bg2:#0b0e17;
+    --card:#11141f;
+    --line:rgba(255,255,255,.08);
+    --text:#e9ecf5;
+    --muted:#9aa3b8;
+    --c1:#00e6c3;   /* teal */
+    --c2:#6c5ce7;   /* violet */
+    --c3:#ff5c8a;   /* pink */
+    --grad:linear-gradient(120deg,#00e6c3 0%,#6c5ce7 50%,#ff5c8a 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+    line-height:1.6;
+  }
+  /* animated background blobs */
+  .bg-glow{position:fixed;inset:0;z-index:-2;overflow:hidden}
+  .blob{
+    position:absolute;border-radius:50%;filter:blur(90px);opacity:.35;
+    animation:float 18s ease-in-out infinite;
+  }
+  .b1{width:520px;height:520px;background:var(--c1);top:-180px;left:-120px}
+  .b2{width:460px;height:460px;background:var(--c2);top:20%;right:-160px;animation-delay:-6s}
+  .b3{width:420px;height:420px;background:var(--c3);bottom:-200px;left:30%;animation-delay:-12s}
+  @keyframes float{
+    0%,100%{transform:translate(0,0) scale(1)}
+    33%{transform:translate(40px,-50px) scale(1.1)}
+    66%{transform:translate(-30px,30px) scale(.95)}
+  }
+  .grain{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.04;
+    background-image:radial-gradient(#fff 1px,transparent 1px);
+    background-size:3px 3px;
+  }
+
+  /* NAV */
+  nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 6%;
+    backdrop-filter:blur(14px);
+    background:rgba(5,6,10,.6);
+    border-bottom:1px solid var(--line);
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-family:'Sora';font-weight:800;font-size:1.35rem;letter-spacing:-.5px}
+  .logo-mark{
+    width:38px;height:38px;border-radius:11px;
+    background:var(--grad);
+    display:grid;place-items:center;font-size:1.1rem;
+    box-shadow:0 0 22px rgba(0,230,195,.45);
+    animation:pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse{50%{box-shadow:0 0 34px rgba(108,92,231,.65)}}
+  .nav-links{display:flex;gap:30px;align-items:center}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:.95rem;transition:.25s}
+  .nav-links a:hover{color:var(--text)}
+  .btn{
+    font-family:'Sora';font-weight:600;font-size:.92rem;
+    padding:11px 22px;border-radius:12px;border:none;cursor:pointer;
+    text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.3s;
+  }
+  .btn-primary{background:var(--grad);color:#05060a;box-shadow:0 8px 26px rgba(0,230,195,.3)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(108,92,231,.5)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--c1);color:var(--c1)}
+
+  /* HERO */
+  .hero{
+    padding:100px 6% 70px;
+    max-width:1200px;margin:0 auto;
+    text-align:center;
+    position:relative;
+  }
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 16px;border-radius:999px;
+    background:rgba(0,230,195,.08);
+    border:1px solid rgba(0,230,195,.3);
+    color:var(--c1);font-size:.82rem;font-weight:500;
+    margin-bottom:26px;
+    animation:fadeUp .8s both;
+  }
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--c1);box-shadow:0 0 10px var(--c1);animation:blink 1.8s infinite}
+  @keyframes blink{50%{opacity:.3}}
+  h1{
+    font-family:'Sora';font-weight:800;
+    font-size:clamp(2.4rem,6vw,4.6rem);
+    line-height:1.05;letter-spacing:-2px;
+    margin-bottom:22px;animation:fadeUp .9s .1s both;
+  }
+  h1 .grad{
+    background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    background-size:200% auto;animation:shine 5s linear infinite;
+  }
+  @keyframes shine{to{background-position:200% center}}
+  .hero p{
+    color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);
+    max-width:620px;margin:0 auto 36px;animation:fadeUp 1s .2s both;
+  }
+  .hero-cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp 1.1s .3s both}
+  .btn-lg{padding:15px 30px;font-size:1rem;border-radius:14px}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+
+  /* STATS */
+  .stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:18px;max-width:900px;margin:70px auto 0;padding:0 6%;
+  }
+  .stat{
+    background:rgba(255,255,255,.03);border:1px solid var(--line);
+    border-radius:16px;padding:22px 18px;text-align:center;
+    transition:.3s;
+  }
+  .stat:hover{transform:translateY(-4px);border-color:rgba(0,230,195,.4);background:rgba(0,230,195,.05)}
+  .stat b{display:block;font-family:'Sora';font-size:1.9rem;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat span{color:var(--muted);font-size:.85rem}
+
+  /* SECTION */
+  section{padding:90px 6%;max-width:1200px;margin:0 auto}
+  .sec-head{text-align:center;margin-bottom:56px}
+  .sec-head h2{font-family:'Sora';font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:-1px;margin-bottom:14px}
+  .sec-head p{color:var(--muted);max-width:560px;margin:0 auto}
+
+  /* CATEGORIES */
+  .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
+  .cat{
+    position:relative;overflow:hidden;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:20px;padding:32px 26px;transition:.4s;cursor:pointer;
+  }
+  .cat::before{
+    content:"";position:absolute;inset:0;opacity:0;transition:.4s;
+    background:linear-gradient(140deg,rgba(0,230,195,.12),rgba(108,92,231,.12),transparent);
+  }
+  .cat:hover{transform:translateY(-6px);border-color:rgba(108,92,231,.5)}
+  .cat:hover::before{opacity:1}
+  .cat .ico{font-size:2rem;margin-bottom:16px;display:block}
+  .cat h3{font-family:'Sora';font-size:1.18rem;margin-bottom:8px}
+  .cat p{color:var(--muted);font-size:.9rem;position:relative}
+
+  /* FEATURES */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px}
+  .feat{
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+    border:1px solid var(--line);border-radius:18px;padding:28px;
+    transition:.3s;
+  }
+  .feat:hover{border-color:rgba(0,230,195,.35);transform:translateY(-4px)}
+  .feat .num{
+    width:36px;height:36px;border-radius:10px;display:grid;place-items:center;
+    background:var(--grad);color:#05060a;font-family:'Sora';font-weight:800;margin-bottom:16px;
+  }
+  .feat h3{font-family:'Sora';font-size:1.05rem;margin-bottom:8px}
+  .feat p{color:var(--muted);font-size:.9rem}
+
+  /* CTA BANNER */
+  .cta-band{
+    max-width:1100px;margin:0 auto;
+    background:linear-gradient(120deg,rgba(0,230,195,.12),rgba(108,92,231,.12),rgba(255,92,138,.12));
+    border:1px solid var(--line);border-radius:26px;
+    padding:56px 40px;text-align:center;position:relative;overflow:hidden;
+  }
+  .cta-band h2{font-family:'Sora';font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-1px;margin-bottom:14px}
+  .cta-band p{color:var(--muted);margin-bottom:28px}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line);padding:40px 6%;text-align:center;color:var(--muted);font-size:.88rem}
+  footer .logo{justify-content:center;margin-bottom:14px;font-size:1.1rem}
+  footer a{color:var(--c1);text-decoration:none}
+
+  @media(max-width:720px){
+    .nav-links{display:none}
+    nav{padding:14px 5%}
+    .hero{padding-top:60px}
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-glow">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+</div>
+<div class="grain"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo"><span class="logo-mark">🐉</span> Dragonfly</div>
+  <div class="nav-links">
+    <a href="#categories">Categories</a>
+    <a href="#features">Why Us</a>
+    <a href="login.html">Sign in</a>
+  </div>
+  <a href="login.html" class="btn btn-primary">Get Started →</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="pill"><span class="dot"></span> Premium digital marketplace</div>
+  <h1>Download <span class="grad">extraordinary</span><br>digital assets.</h1>
+  <p>Videos, photos, documents and creative files — curated, licensed and delivered instantly to your inbox after checkout.</p>
+  <div class="hero-cta">
+    <a href="#categories" class="btn btn-primary btn-lg">Browse Assets</a>
+    <a href="login.html" class="btn btn-ghost btn-lg">Create Account</a>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><b>12k+</b><span>Files Listed</span></div>
+  <div class="stat"><b>4.9★</b><span>Avg. Rating</span></div>
+  <div class="stat"><b>Instant</b><span>Delivery</span></div>
+  <div class="stat"><b>Secure</b><span>Payments</span></div>
+</div>
+
+<!-- CATEGORIES -->
+<section id="categories">
+  <div class="sec-head">
+    <h2>Explore the collection</h2>
+    <p>Four curated libraries, thousands of hand-picked assets ready to download.</p>
+  </div>
+  <div class="cats">
+    <div class="cat"><span class="ico">🎬</span><h3>Videos</h3><p>4K footage, motion graphics, stock clips &amp; cinematic b-roll.</p></div>
+    <div class="cat"><span class="ico">📸</span><h3>Photos</h3><p>High-resolution photography, textures, and design assets.</p></div>
+    <div class="cat"><span class="ico">📄</span><h3>Documents</h3><p>Templates, guides, e-books and professional PDF kits.</p></div>
+    <div class="cat"><span class="ico">🎨</span><h3>Creative</h3><p>PSD files, fonts, icons and UI kits for designers.</p></div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="sec-head">
+    <h2>Why Dragonfly</h2>
+    <p>Built for creators who value speed, quality and security.</p>
+  </div>
+  <div class="features">
+    <div class="feat"><div class="num">1</div><h3>Instant Delivery</h3><p>Secure download links are generated the moment your payment clears.</p></div>
+    <div class="feat"><div class="num">2</div><h3>Commercial License</h3><p>Every asset includes a clear commercial usage license.</p></div>
+    <div class="feat"><div class="num">3</div><h3>Secure Checkout</h3><p>Payments processed by Stripe — your card data never touches our servers.</p></div>
+    <div class="feat"><div class="num">4</div><h3>Lifetime Access</h3><p>Re-download your purchases anytime from your dashboard.</p></div>
+    <div class="feat"><div class="num">5</div><h3>Curated Quality</h3><p>Every file is reviewed before it reaches the marketplace.</p></div>
+    <div class="feat"><div class="num">6</div><h3>Global CDN</h3><p>Fast downloads worldwide, powered by edge storage.</p></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="cta-band">
+    <h2>Ready to create something great?</h2>
+    <p>Join thousands of creators downloading from Dragonfly every day.</p>
+    <a href="login.html" class="btn btn-primary btn-lg">Start Downloading →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo"><span class="logo-mark">🐉</span> Dragonfly</div>
+  <p>© <span id="year"></span> Dragonfly. Premium digital assets. · <a href="login.html">Sign in</a></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  // subtle parallax on hero blobs
+  document.addEventListener('mousemove', e=>{
+    const x = (e.clientX/innerWidth - .5);
+    const y = (e.clientY/innerHeight - .5);
+    document.querySelectorAll('.blob').forEach((b,i)=>{
+      const f = (i+1)*10;
+      b.style.transform = `translate(${x*f}px, ${y*f}px)`;
+    });
+  });
+</script>
+</body>
+</html>
